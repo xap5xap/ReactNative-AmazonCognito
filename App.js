@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'react-native-aws-cognito-js';
 
@@ -26,6 +27,15 @@ export default class App extends Component<{}> {
   username = 'user@company.com';
   password = 'Pa$$w0rd'
 
+  componentDidMount() {
+    console.log('component did mount')
+    //1) Create User Pool
+    this.userPool = new CognitoUserPool({
+      UserPoolId: 'us-east-1_qIXIWe28m',
+      ClientId: '5up7imaricrh14a2i0qmiu6dv9'
+    })
+  }
+
   createUserInAmazonCognito() {
     console.log('create user')
 
@@ -35,12 +45,12 @@ export default class App extends Component<{}> {
       Name: 'given_name',
       Value: 'Smith'
     });
-  
+
     attributeList.push(attributeGivenName);
 
     var cognitoUser;
     //Call SignUp function
-    userPool.signUp(this.username, this.password, attributeList, null, (err, result) => {
+    this.userPool.signUp(this.username, this.password, attributeList, null, (err, result) => {
       if (err) {
         console.log('Error at signup ', err);
         return;
