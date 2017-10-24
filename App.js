@@ -97,7 +97,6 @@ export default class App extends Component<{}> {
         console.log('mfaRequired', codeDeliveryDetails)
       }
     });
-
   }
 
 
